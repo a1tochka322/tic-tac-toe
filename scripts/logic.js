@@ -6,20 +6,17 @@ let boardSize = 3;
 
 function startGame() {
     board = [];
-    let rows = [];
     for (let i = 0; i < boardSize; i++) {
-        rows.push('');
+        board [i] = [];
+        for (let j = 0; j < boardSize; j++) {
+            board[i][j] = '';
+        }
     }
-    for (let j = 0; j < boardSize; j++) {
-        board.push(rows);
-    }
-    console.log(board);
     activePlayer = 1;
     renderBoard(board);
 }
 
 function click (row, column) {
-    console.log(board);
     board[row][column] = players[activePlayer];
     renderBoard(board);
     if (checkWinner (players[activePlayer])) {
@@ -35,9 +32,9 @@ function click (row, column) {
 function checkDiagonal(symbol) {
     let toright = true;
     let toleft = true;
-    for (let i=0; i<3; i++) {
+    for (let i=0; i<boardSize; i++) {
         toright &= (board[i][i] === symbol);
-        toleft &= (board[3-i-1][i] === symbol);
+        toleft &= (board[boardSize-i-1][i] === symbol);
     }
     return toright || toleft;
 
@@ -46,10 +43,10 @@ function checkDiagonal(symbol) {
 function checkLanes(symbol) {
     let cols;
     let rows;
-    for (let col=0; col<3; col++) {
+    for (let col=0; col<boardSize; col++) {
         cols = true;
         rows = true;
-        for (let row=0; row<3; row++) {
+        for (let row=0; row<boardSize; row++) {
             cols &= (board[col][row] === symbol);
             rows &= (board[row][col] === symbol);
         }
